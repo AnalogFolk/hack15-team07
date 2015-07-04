@@ -7692,3 +7692,60 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+@font-face {
+  font-family: 'aaarghnormal';
+  src: url("../fonts/Aaargh-webfont.eot");
+  src: url("../fonts/Aaargh-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Aaargh-webfont.woff") format("woff"), url("../fonts/Aaargh-webfont.ttf") format("truetype"), url("../fonts/Aaargh-webfont.svg#aaarghnormal") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+body, .pane, .view {
+  background-color: #d12d23;
+  background-image: url("../img/elephant-large.png") no-repeat bottom right; }
+
+h1, h2, h3 {
+  font-family: 'aaarghnormal'; }
+
+.bar.bar-stable {
+  background-color: white; }
+  .bar.bar-stable .title {
+    color: #d12d23;
+    font-family: 'aaarghnormal';
+    font-weight: bold; }
+
+[nav-bar-transition="ios"] [nav-bar="active"] .bar, [nav-bar-transition="ios"] [nav-bar="entering"] .bar {
+  background: url("../img/elephant-header.png") no-repeat bottom right;
+  background-size: 25%; }
+
+.item-divider {
+  background-color: white;
+  color: #d12d23; }
+
+.button.button-positive {
+  background-color: #a9170e;
+  border: 0; }
+  .button.button-positive.activated {
+    background-color: #c73528; }
+
+.welcome-screen {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+  transition: opacity 0.2s;
+  background-color: #d12d23; }
+  .welcome-screen.ng-hide-animate {
+    opacity: 0;
+    transition: opacity 0.2s; }
+  .welcome-screen .title {
+    background: url("../img/logo-repeater.png") repeat-x;
+    width: 100%;
+    top: 20%;
+    position: relative;
+    height: 20%; }
+  .welcome-screen .elephant-image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    right: 0; }

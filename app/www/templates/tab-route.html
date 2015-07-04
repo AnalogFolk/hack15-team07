@@ -1,15 +1,16 @@
-<ion-view view-title="Route">
-  <ion-content>
-    <ion-slide-box on-slide-changed="slideHasChanged($index)">
-      <ion-slide ng-repeat="wayPoint in data.wayPoints">
-        <img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location={{wayPoint.lat}},{{wayPoint.lon}}&heading={{wayPoint.bearing}}" width="100%" />
-        <!--<h1>{{wayPoint.lat}}, {{wayPoint.lon}}, {{wayPoint.bearing}}</h1>-->
-        <div style="font-weight:bold;text-align:center;padding-top:20px;">
-          <span ng-repeat="word in wayPoint.words">{{word}}&nbsp;</span>
-        </div>
-        <!-- <image-search ng-repeat="word in wayPoint.words" keyword="{{word}}"></image-search> -->
-      </ion-slide>
-    </ion-slide-box>
-  </ion-content>
+<ion-view view-title="Dumbo Route">
+    <ion-content>
+        <ion-slide-box on-slide-changed="slideHasChanged($index)">
+            <ion-slide ng-repeat="wayPoint in data.wayPoints">
+            <div class="list card">
+                <img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location={{wayPoint.lat}},{{wayPoint.lon}}&heading={{wayPoint.bearing}}" width="100%" />
+                <!--<h1>{{wayPoint.lat}}, {{wayPoint.lon}}, {{wayPoint.bearing}}</h1>-->
+                <div style="font-weight:bold;text-align:center;padding-top:20px;">
+                    <span ng-repeat="word in wayPoint.words">{{word}}&nbsp;</span>
+                </div>
+                <!-- <image-search ng-repeat="word in wayPoint.words" keyword="{{word}}"></image-search> -->
+              </div>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
 </ion-view>
-
