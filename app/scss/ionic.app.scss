@@ -21,7 +21,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-$primary-color: #d12d23;
+$primary-color: #e6323e;
 $secondary-color: white;
 
 // Custom template styles
@@ -122,4 +122,32 @@ h3 {
     background-color: #fff;
     padding: 5px;
     border: 1px solid #999;
+}
+
+// Three words
+.three-words {
+    &:before {
+        content: '';
+        width: 100px;
+        height: 50px;
+        background: url("../img/w3icon.png") no-repeat;
+        background-size: contain;
+        display: block;
+        position: relative;
+        left: 175px;
+        top: -9px;
+    }
+    color: black;
+    font-family: 'aaarghnormal';
+    font-weight: bold;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 0;
+    span:nth-child(even) {
+        color: $primary-color;
+    }
+}
+
+.slider-pager .slider-pager-page {
+    color: white;
 }
