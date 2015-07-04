@@ -74,7 +74,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'tab-hyperlapse': {
         templateUrl: 'templates/tab-hyperlapse.html',
-        controller: 'RouteCtrl'
+        controller: 'HyperCtrl'
       }
     }
   });
