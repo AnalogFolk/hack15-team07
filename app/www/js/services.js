@@ -67,9 +67,17 @@ angular.module('starter.services', [])
 						var leg = route.legs[legIndex];
 						for (var stepIndex = 0; stepIndex < leg.steps.length; stepIndex++) {
 							var step = leg.steps[stepIndex];
+							var startLat = step.start_location.A * Math.PI / 180;
+							var startLon = step.start_location.F * Math.PI / 180;
+							var endLat = step.end_location.A * Math.PI / 180;
+							var endLon = step.end_location.F * Math.PI / 180;
+							var dy = Math.sin(endLon - startLon) * Math.cos(endLat);
+							var dx = Math.cos(startLat) * Math.sin(endLat) - Math.sin(startLat) * Math.cos(endLat) * Math.cos(endLon - startLon);
+							var bearing = Math.atan2(dy, dx) * 180 / Math.PI;
 							wayPoints.push({
 								lat: step.end_location.A,
-								lon: step.end_location.F
+								lon: step.end_location.F,
+								bearing: bearing
 							});
 						}
 					}
