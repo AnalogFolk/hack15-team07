@@ -1,26 +1,43 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
+      <div class="item item-divider">Search Location</div>
       <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
+
+
+
+
+
+
+<div class="list list-inset">
+  <label class="item item-input" for="start-location">
+          <input id="start-location" type="text" placeholder="Your start location"></input>
+  </label>
+  <label class="item item-input" for="target-location">
+
+          <input id="target-location" type="text" placeholder="Your target location"></input>
+  </label>
+</div>
+
+
+
+<div class="list">
+
+  <label class="item item-input item-select">
+    <div class="input-label">
+      Transport method
     </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
+    <select>
+                <option value="walking" selected>Walking</option>
+                <option value="cycle">Cycle</option>
+    </select>
+  </label>
+
+</div>
+
+          <button class="button button-full button-positive">Search</button>
+
+
         </div>
       </div>
     </div>
