@@ -68,8 +68,8 @@ angular.module('starter.services', [])
 						for (var stepIndex = 0; stepIndex < leg.steps.length; stepIndex++) {
 							var step = leg.steps[stepIndex];
 							wayPoints.push({
-								lon: step.end_location.A,
-								lat: step.end_location.F
+								lat: step.end_location.A,
+								lon: step.end_location.F
 							});
 						}
 					}

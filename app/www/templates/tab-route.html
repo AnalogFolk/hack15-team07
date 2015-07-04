@@ -1,0 +1,11 @@
+<ion-view view-title="Route">
+  <ion-content>
+    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+      <ion-slide ng-repeat="wayPoint in data.wayPoints">
+        <h1>{{wayPoint.lat}}, {{wayPoint.lon}}</h1>
+        <span ng-repeat="word in wayPoint.words">{{word}}</span>
+        <!-- <image-search ng-repeat="word in wayPoint.words" keyword="{{word}}"></image-search> -->
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+</ion-view>

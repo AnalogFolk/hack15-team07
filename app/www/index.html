@@ -15,14 +15,18 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- Google Maps API -->
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
     <!-- your app's js -->
     <script src="js/apikeys.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+
+    <!-- Google Maps API -->
+    <script type="text/javascript">
+      document.write('<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=' +
+                     GOOGLE_API_KEY +
+                     '&sensor=false"><' + '/script>');
+    </script>
   </head>
   <body ng-app="starter">
     <!--
