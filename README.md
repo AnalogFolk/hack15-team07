@@ -16,3 +16,18 @@ Help people to remember routes without looking at their phone!
 **Why not tell us more about your team**
 
 Er...
+
+
+** Installation
+
+Dependencies:
+npm - available @ nodejs.org
+
+To install:
+
+npm install -g ionic
+npm install -g cordova
+
+cd app
+ionic serve
+
