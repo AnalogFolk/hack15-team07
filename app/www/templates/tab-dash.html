@@ -4,27 +4,19 @@
       <div class="item item-divider">Search Location</div>
       <div class="item item-body">
 
-
-
-
-
-
 <div class="list list-inset">
   <label class="item item-input" for="start-location">
-          <input id="start-location" type="text" placeholder="Your start location" ng-model="startLocation" />
-          <button class="button button-positive" ng-click="getCurrentLocation()">
+          <input id="start-location" type="text" placeholder="Your start location" data-ng-model="place.startLocation" />
+          <button class="button button-positive" data-ng-click="getCurrentLocation();">
       <i class="icon ion-earth"></i>
     </button>
   </label>
 
   <label class="item item-input" for="target-location">
 
-          <input id="target-location" type="text" placeholder="Your target location" ng-model="targetLocation" />
+          <input id="target-location" type="text" placeholder="Your target location" data-ng-model="place.targetLocation" />
   </label>
 </div>
-
-
-
 <div class="list">
 
   <label class="item item-input item-select">
@@ -40,7 +32,7 @@
 </div>
 
 
-          <button class="button button-full button-positive" ng-click="searchLocation()">Search</button>
+          <button class="button button-full button-positive" data-ng-click="searchLocation();">Search</button>
           <span ng-show="noFields">Please fill in your start and target location</span>
 
 
