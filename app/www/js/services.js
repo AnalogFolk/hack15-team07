@@ -104,7 +104,8 @@ angular.module('starter.services', [])
 
 .factory('what3words', ['$rootScope', '$q', '$http',
 	function ($rootScope, $q, $http) {
-		var BASE_URL = 'https://api.what3words.com/position';
+		var BASE_W3W_URL = 'https://api.what3words.com/w3w';
+		var BASE_LOCATION_URL = 'https://api.what3words.com/position';
 
 		function getWords(key, lat, lon) {
 			var deferred = $q.defer();
@@ -116,7 +117,7 @@ angular.module('starter.services', [])
 				}
 			};
 
-			$http.get(BASE_URL, config)
+			$http.get(BASE_LOCATION_URL, config)
 				.success(function (data, status, headers, config) {
 					var obj = angular.fromJson(data);
 					return deferred.resolve(obj.words);
@@ -128,8 +129,35 @@ angular.module('starter.services', [])
 			return deferred.promise;
 		}
 
+		function getLocation(key, words) {
+			var deferred = $q.defer();
+
+			var config = {
+				params: {
+					key: key,
+					string: words[0] + "." + words[1] + "." + words[2]
+				}
+			};
+
+			$http.get(BASE_W3W_URL, config)
+				.success(function (data, status, headers, config) {
+					var obj = angular.fromJson(data);
+					if (obj.position) {
+						return deferred.resolve({lat: obj.position[0], lon: obj.position[1]});
+					} else {
+						return deferred.reject(status);
+					}
+				})
+				.error(function (data, status, headers, config) {
+					return deferred.reject(status);
+				});
+
+			return deferred.promise;
+		}
+
 		return {
-			getWords: getWords
+			getWords: getWords,
+			getLocation: getLocation
 		}
 	}
 ])
