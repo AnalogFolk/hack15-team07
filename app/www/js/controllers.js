@@ -1,14 +1,6 @@
 angular.module('starter.controllers', [])
 
-    .controller('DashCtrl', function ($scope, $state, routes) {
-      routes.getWayPoints('37.7738571,-122.4102823', '37.7891231,-122.4173545').then(function(wayPoints) {
-        $scope.wayPoints = wayPoints;
-        $scope.locationsForStreetView = [];
-        for (var i = 0; i < $scope.wayPoints.length; i++) {
-          $scope.locationsForStreetView.push($scope.wayPoints[i].lon + "," + $scope.wayPoints[i].lat);
-        }
-      });
-    })
+    .controller('DashCtrl', function ($scope, $state, routes) {})
 
 .controller('ChatsCtrl', function ($scope, Chats) {
 	// With the new view caching in Ionic, Controllers are only called
