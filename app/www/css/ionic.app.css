@@ -7734,7 +7734,7 @@ h1, h2, h3 {
   position: absolute;
   z-index: 1000;
   transition: opacity 0.2s;
-  background-color: #e6323e; }
+  background-color: #d12d23; }
   .welcome-screen.ng-hide-animate {
     opacity: 0;
     transition: opacity 0.2s; }
