@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('IntroCtrl', function () {})
 
-.controller('DashCtrl', function ($scope, $location, queryData) {
+.controller('DashCtrl', function ($scope, $location, queryData, geolocation, getPostcode) {
 
 	$scope.noFields = false;
 
@@ -18,7 +18,21 @@ angular.module('starter.controllers', [])
 			$scope.noFields = true;
 		} else {
 			$scope.noFields = false;
-			queryData.setQueryData(startLocation, targetLocation, transportMode);
+
+
+      var query = queryData.getQueryData();
+
+
+
+      if(query.destination === '') {
+
+          startLocation= query.origin;
+
+         
+
+      } 
+
+         queryData.setQueryData(startLocation, targetLocation, transportMode);
                         $location.path('/tab/route');
 		}
 
@@ -26,16 +40,24 @@ angular.module('starter.controllers', [])
 
 	$scope.getCurrentLocation = function () {
 
-
-		console.log('hello');
-
-		//geolocation.getLocation().then(function(data){
-		//     $scope.startLocation = {lat:data.coords.latitude, long:data.coords.longitude};
-		//   });
+var start = '';
+    geolocation.getLocation().then(function(data){
 
 
 
-	};
+getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(data) {
+
+  start = data.address.postcode;
+ queryData.setQueryData(start, '', '');
+    
+       $scope.startLocation = start;
+});
+
+});
+
+};
+
+
 
 
 
