@@ -219,7 +219,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			}
 			var destinationWords = /^(\w+) (\w+) (\w+)$/.exec(destination);
 			if (destinationWords && (destinationWords.length == 4)) {
-				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [destinationWords[1], destinationWords[2], destinationWords[3]]).then(function(lat, lon) {
+				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [destinationWords[1], destinationWords[2], destinationWords[3]]).then(function(latLon) {
 					destination = latLon.lat + "," + latLon.lon;
 					return null;
                                 }));
