@@ -79,7 +79,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 	}
 })
 
-.controller('RouteCtrl', function ($scope, $location, $ionicSlideBoxDelegate, $q, routes, what3words, queryData) {
+.controller('RouteCtrl', function ($scope, $location, $ionicSlideBoxDelegate, $q, routes, what3words, queryData, $timeout) {
 	$scope.$on('$ionicView.enter', function(e) {
 		var data = queryData.getQueryData();
 		if (data.origin && data.destination) {
@@ -132,10 +132,10 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			if (deferreds.length > 0) {
 				$q.all(deferreds).finally(function() {
 					console.log("All done!");
-					getRoutes(origin, destination, data.transportMode);
+					getRoutes(origin, destination, null);
 				});
 			} else {
-				getRoutes(origin, destination, data.transportMode);
+				getRoutes(origin, destination, null);
 			}
 		} else {
 			$location.path('/tab/dash');
@@ -228,7 +228,9 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			  }
 
 			   //Set map to first marker
-			   updateMapDisplay(markerArray[0], myRoute.steps[0].instructions);
+			   $timeout(function() {
+			  	 updateMapDisplay(markerArray[0], myRoute.steps[0].instructions);
+				 }, 500);
 
 			}
 
