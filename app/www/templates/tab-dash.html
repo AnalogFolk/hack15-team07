@@ -7,13 +7,15 @@
 
 <form novalidate class="simple-form">
 <div class="list list-inset">
-  <label class="item item-input" for="start-location">
+  <label class="item item-input" for="start-location" style="float:left;">
 
-          <input id="start-location" type="text" placeholder="Your start location" ng-model="startLocation" />
+          <input id="start-location" type="text" placeholder="Your start location" ng-model="startLocation" /></label>
 
-  </label>
+    <button class="button button-positive" ng-click="getCurrentLocation()" style="float:right;">
+        <i class="icon ion-earth"></i>
+    </button>
 
-  <label class="item item-input" for="target-location">
+  <label class="item-input" for="target-location" style="clear:both;">
 
           <input id="target-location" type="text" placeholder="Your target location" ng-model="targetLocation" />
   </label>
@@ -39,10 +41,9 @@
           <button class="button button-full button-positive" ng-click="searchLocation(startLocation, targetLocation, transportMethod)">Search</button>
           <span ng-show="noFields">Please fill in your start and target location</span>
 
-          
-          <button class="button button-positive" ng-click="getCurrentLocation()">
-      <i class="icon ion-earth"></i>
-    </button>
+
+
+
 </form>
 
         </div>
