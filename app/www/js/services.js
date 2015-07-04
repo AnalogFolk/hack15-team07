@@ -47,4 +47,45 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+
+.factory('routes', ['$rootScope', '$q', function($rootScope, $q) {
+  function getWayPoints(origin, destination, travelMode)
+  {
+    var request = {
+      origin: origin,
+      destination: destination,
+      travelMode: travelMode || google.maps.TravelMode.WALKING
+    };
+    var deferred = $q.defer();
+
+    function callback(result, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        var route = result.routes[0];
+        var wayPoints = [];
+        for (var legIndex = 0; legIndex < route.legs.length; legIndex++) {
+          var leg = route.legs[legIndex];
+          for (var stepIndex = 0; stepIndex < leg.steps.length; stepIndex++) {
+            var step = leg.steps[stepIndex];
+            wayPoints.push({lon: step.end_location.A, lat: step.end_location.F});
+          }
+        }
+        $rootScope.$apply(function() {
+          return deferred.resolve(wayPoints);
+        });
+      } else {
+        $rootScope.$apply(function() {
+          return deferred.reject(status);
+        });
+      }
+    }
+
+    var directionsService = new google.maps.DirectionsService();
+    directionsService.route(request, callback);
+    return deferred.promise;
+  }
+  
+  return {
+    getWayPoints: getWayPoints
+  }
+}]);
