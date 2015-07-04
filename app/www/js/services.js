@@ -74,10 +74,12 @@ angular.module('starter.services', [])
 							var dy = Math.sin(endLon - startLon) * Math.cos(endLat);
 							var dx = Math.cos(startLat) * Math.sin(endLat) - Math.sin(startLat) * Math.cos(endLat) * Math.cos(endLon - startLon);
 							var bearing = Math.atan2(dy, dx) * 180 / Math.PI;
+							var directions = step.instructions;
 							wayPoints.push({
 								lat: step.end_location.A,
 								lon: step.end_location.F,
-								bearing: bearing
+								bearing: bearing,
+								directions: directions
 							});
 						}
 					}

@@ -103,6 +103,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 								lat: wayPoint.lat,
 								lon: wayPoint.lon,
 								bearing: wayPoint.bearing,
+								directions: wayPoint.directions,
 								words: words
 							});
 						}
