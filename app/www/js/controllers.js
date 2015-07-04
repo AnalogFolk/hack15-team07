@@ -150,6 +150,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			var directionsDisplay;
 			var directionsService;
 			var stepDisplay;
+			var myRoute;
 			var markerArray = [];
 
 			function initializeMap() {
@@ -160,7 +161,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			  // Create a map and center it on Manhattan.
 			  var manhattan = new google.maps.LatLng(data.origin);
 			  var mapOptions = {
-			    zoom: 20,
+			    zoom: 15,
 			    center: manhattan
 			  }
 			  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -205,6 +206,8 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			      showSteps(response);
 			    }
 			  });
+
+
 			}
 
 			function showSteps(directionResult) {
@@ -212,7 +215,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			  // info window. Also attach the marker to an array so we
 			  // can keep track of it and remove it when calculating new
 			  // routes.
-			  var myRoute = directionResult.routes[0].legs[0];
+			  myRoute = directionResult.routes[0].legs[0];
 
 			  for (var i = 0; i < myRoute.steps.length; i++) {
 			  	console.log('adding marker for ', myRoute.steps[i].start_location);
@@ -223,19 +226,38 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			    attachInstructionText(marker, myRoute.steps[i].instructions);
 			    markerArray[i] = marker;
 			  }
+
+			   //Set map to first marker
+			   updateMapDisplay(markerArray[0], myRoute.steps[0].instructions);
+
 			}
 
 			function attachInstructionText(marker, text) {
+
 			  google.maps.event.addListener(marker, 'click', function() {
 			    // Open an info window when the marker is clicked on,
 			    // containing the text of the step.
-			    console.log(marker);
 			    stepDisplay.setContent(text);
 			    stepDisplay.open(map, marker);
+    			map.setCenter(marker.getPosition());
+					map.setZoom(15);
 			  });
 			}
 			
 			initializeMap();
+
+			$scope.slideHasChanged = function(index) {
+				console.log('slide has changed');
+			    updateMapDisplay(markerArray[index], myRoute.steps[index].instructions);
+
+			}
+
+			function updateMapDisplay(marker, text) {
+				 	stepDisplay.setContent(text);
+			    stepDisplay.open(map, marker);
+    			map.setCenter(marker.getPosition());
+					map.setZoom(20);
+			}
 		}
 	});
 })
