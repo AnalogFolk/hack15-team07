@@ -161,4 +161,17 @@ angular.module('starter.services', [])
 			return $http.get(url)
 		}
 	}
-});;
+})
+
+.factory('getPostcode', function($http) {
+
+return {
+	get: function(latitude, longitude) {
+
+		return $http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + latitude + '&lon=' + longitude + '&zoom=18&addressdetails=1');
+
+
+	}
+}
+
+});
