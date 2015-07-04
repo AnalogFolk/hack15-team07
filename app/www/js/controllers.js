@@ -55,6 +55,7 @@ angular.module('starter.controllers', [])
         var words = wordLists[wayPointIndex];
         $scope.data.wayPoints.push({lat: wayPoint.lat,
                                     lon: wayPoint.lon,
+                                    bearing: wayPoint.bearing,
                                     words: words});
       }
       console.log($scope.data.wayPoints);
