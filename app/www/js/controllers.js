@@ -189,11 +189,19 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 
 			  // Retrieve the start and end locations and create
 			  // a DirectionsRequest using WALKING directions.
-			 
+				var travelModes = {
+					walking: google.maps.TravelMode.WALKING,
+					cycle: google.maps.TravelMode.BICYCLING,
+				};
+
+				var travelMode = travelModes[travelMode] || google.maps.TravelMode.WALKING;
+
+
+			 console.log(data.transportMode);
 			  var request = {
 			      origin: data.origin,
 			      destination: data.destination,
-			      travelMode: google.maps.TravelMode.WALKING
+			      travelMode: travelMode
 			  };
 
 			  // Route the directions and pass the response to a
