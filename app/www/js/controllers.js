@@ -71,7 +71,7 @@ angular.module('starter.controllers', [])
 				$q.all(deferreds).then(function (wordLists) {
 					console.log(wayPoints);
 					console.log(wordLists);
-					$scope.data = {};
+					$scope.data = {key: GOOGLE_API_KEY};
 					$scope.data.wayPoints = [];
 					for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
 						var wayPoint = wayPoints[wayPointIndex];
