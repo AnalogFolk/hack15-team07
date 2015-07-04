@@ -1,6 +1,53 @@
 angular.module('starter.controllers', [])
 
-    .controller('DashCtrl', function ($scope, $state, routes) {})
+.controller('DashCtrl', function($scope) {
+
+$scope.noFields = false;
+
+$scope.startLocation = '';
+$scope.targetLocation = '';
+
+$scope.searchLocation = function() {
+
+  console.log($scope.startLocation);
+  console.log($scope.targetLocation);
+
+
+if($scope.startLocation === undefined || 
+  $scope.startLocation === '' || 
+  $scope.targetLocation === undefined || 
+  $scope.targetLocation === '') {
+
+    $scope.noFields = true;
+
+} else {
+
+
+    $scope.noFields = false;
+
+}
+
+
+
+
+};
+
+$scope.getCurrentLocation = function() {
+
+
+console.log('hello');
+
+//geolocation.getLocation().then(function(data){
+ //     $scope.startLocation = {lat:data.coords.latitude, long:data.coords.longitude};
+ //   });
+
+
+
+};
+
+
+  
+})
 
 .controller('ChatsCtrl', function ($scope, Chats) {
 	// With the new view caching in Ionic, Controllers are only called

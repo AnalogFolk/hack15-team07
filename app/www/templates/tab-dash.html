@@ -11,11 +11,15 @@
 
 <div class="list list-inset">
   <label class="item item-input" for="start-location">
-          <input id="start-location" type="text" placeholder="Your start location"></input>
+          <input id="start-location" type="text" placeholder="Your start location" ng-model="startLocation" />
+          <button class="button button-positive" ng-click="getCurrentLocation()">
+      <i class="icon ion-earth"></i>
+    </button>
   </label>
+
   <label class="item item-input" for="target-location">
 
-          <input id="target-location" type="text" placeholder="Your target location"></input>
+          <input id="target-location" type="text" placeholder="Your target location" ng-model="targetLocation" />
   </label>
 </div>
 
@@ -27,7 +31,7 @@
     <div class="input-label">
       Transport method
     </div>
-    <select>
+    <select ng-model="transportMethod">
                 <option value="walking" selected>Walking</option>
                 <option value="cycle">Cycle</option>
     </select>
@@ -35,7 +39,10 @@
 
 </div>
 
-          <button class="button button-full button-positive">Search</button>
+
+          <button class="button button-full button-positive" ng-click="searchLocation()">Search</button>
+          <span ng-show="noFields">Please fill in your start and target location</span>
+
 
 
         </div>
