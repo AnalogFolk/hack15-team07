@@ -135,23 +135,23 @@ angular.module('starter.services', [])
 ])
 
 .factory('queryData', function() {
-  var data = {
-    origin: null, 
-    destination: null, 
-    transportMode: null
-  };
-  
-  return {
-    getQueryData: function() {
-      return data;
-    },
-  
-    setQueryData: function(origin, destination, transportMode) {
-      data.origin = origin;
-      data.destination = destination;
-      data.transportMode = transportMode;
-    }
-  };
+	var data = {
+		origin: null, 
+		destination: null, 
+		transportMode: null
+	};
+	
+	return {
+		getQueryData: function() {
+			return data;
+		},
+		
+		setQueryData: function(origin, destination, transportMode) {
+			data.origin = origin;
+			data.destination = destination;
+			data.transportMode = transportMode;
+		}
+	};
 })
 
 .factory('imageSeachFactory', function ($http) {
