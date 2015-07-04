@@ -52,10 +52,14 @@ angular.module('starter.services', [])
 .factory('routes', ['$rootScope', '$q',
 	function ($rootScope, $q) {
 		function getWayPoints(origin, destination, travelMode) {
+			var travelModes = {
+				walking: google.maps.TravelMode.WALKING,
+				cycle: google.maps.TravelMode.BICYCLING,
+			};
 			var request = {
 				origin: origin,
 				destination: destination,
-				travelMode: travelMode || google.maps.TravelMode.WALKING
+				travelMode: travelModes[travelMode] || google.maps.TravelMode.WALKING
 			};
 			var deferred = $q.defer();
 

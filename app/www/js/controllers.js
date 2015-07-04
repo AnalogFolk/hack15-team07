@@ -132,10 +132,10 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			if (deferreds.length > 0) {
 				$q.all(deferreds).finally(function() {
 					console.log("All done!");
-					getRoutes(origin, destination, null);
+					getRoutes(origin, destination, data.transportMode);
 				});
 			} else {
-				getRoutes(origin, destination, null);
+				getRoutes(origin, destination, data.transportMode);
 			}
 		} else {
 			$location.path('/tab/dash');
