@@ -68,7 +68,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
   
 })
 
-.directive('hyperlapse', function($timeout, $location, queryData) {
+.directive('hyperlapse', function($timeout, $location, $q, what3words, queryData) {
 
   return {
     scope: {
@@ -80,15 +80,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
       $timeout(function() {
         var data = queryData.getQueryData();
         if (data.origin && data.destination) {
-
-/*
-          routes.getWayPoints(data.origin, data.destination).then(function (wayPoints) {
-            for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
-              var wayPoint = wayPoints[wayPointIndex];
-              var lat = wayPoint.lat;
-            }
-*/
-        
+          function doHyperlapse(origin, destination, transportMode) {
             var el = element[0];
     
             var hyperlapse = new Hyperlapse(el, {
@@ -117,9 +109,9 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
             };
             var route = {
               request:{
-                origin: data.origin,
-                destination: data.destination,
-                travelMode: travelModes[data.transportMode] || google.maps.TravelMode.WALKING
+                origin: origin,
+                destination: destination,
+                travelMode: travelModes[transportMode] || google.maps.TravelMode.WALKING
               }
             };
             
@@ -130,9 +122,34 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
                     console.log(status);
                 }
             });
-/*
-          });
-*/
+          };
+
+			var origin = data.origin;
+			var destination = data.destination;
+			var deferreds = [];
+			var originWords = /^(\w+) (\w+) (\w+)$/.exec(origin);
+			if (originWords && (originWords.length == 4)) {
+				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [originWords[1], originWords[2], originWords[3]]).then(function(latLon) {
+					origin = latLon.lat + "," + latLon.lon;
+					return null;
+                                }));
+			}
+			var destinationWords = /^(\w+) (\w+) (\w+)$/.exec(destination);
+			if (destinationWords && (destinationWords.length == 4)) {
+				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [destinationWords[1], destinationWords[2], destinationWords[3]]).then(function(lat, lon) {
+					destination = latLon.lat + "," + latLon.lon;
+					return null;
+                                }));
+			}
+			if (deferreds.length > 0) {
+				$q.all(deferreds).finally(function() {
+					console.log("All done!");
+					doHyperlapse(origin, destination, data.transportMode);
+				});
+			} else {
+				doHyperlapse(origin, destination, data.transportMode);
+			}
+
         } else {
           $location.path('/tab/dash');
         }
@@ -210,10 +227,10 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			if (deferreds.length > 0) {
 				$q.all(deferreds).finally(function() {
 					console.log("All done!");
-					getRoutes(origin, destination, null);
+					getRoutes(origin, destination, data.transportMode);
 				});
 			} else {
-				getRoutes(origin, destination, null);
+				getRoutes(origin, destination, data.transportMode);
 			}
 		} else {
 			$location.path('/tab/dash');
