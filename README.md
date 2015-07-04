@@ -7,7 +7,7 @@
 **Matt Williams** | **Jordan Lapointe** | **Vijay Dubb** | **Peter Gordon**
 [@maffydub](https://twitter.com/maffydub) | [@jordanpgl](https://twitter.com/jordanpgl) | | [@petergordon](https://twitter.com/petergordon)
 [matt-williams](https://github.com/matt-williams) | [jordanpgl](https://github.com/jordanpgl) | [vd39](https://github.com/vd39) | [dustko](https://github.com/dustko)
- | [http://jordanlapointe.me/](http://jordanlapointe.me/) |
+ | [http://jordanlapointe.me/](http://jordanlapointe.me/) | |
 
 **Brief description of your hack**
 
