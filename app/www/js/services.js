@@ -88,4 +88,35 @@ angular.module('starter.services', [])
   return {
     getWayPoints: getWayPoints
   }
+}])
+
+.factory('what3words', ['$rootScope', '$q', '$http', function($rootScope, $q, $http) {
+  var BASE_URL = 'https://api.what3words.com/position';
+
+  function getWords(key, lat, lon)
+  {
+    var deferred = $q.defer();
+
+    var config = {
+      params: {
+        key: key,
+        position: lat + "," + lon
+      }
+    };
+
+    $http.get(BASE_URL, config)
+    .success(function(data, status, headers, config) {
+      var obj = angular.fromJson(data);
+      return deferred.resolve(obj.words);
+    })
+    .error(function(data, status, headers, config) {
+      return deferred.reject(status);
+    });
+
+    return deferred.promise;
+  }
+  
+  return {
+    getWords: getWords
+  }
 }]);
