@@ -136,7 +136,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			}
 			var destinationWords = /^(\w+) (\w+) (\w+)$/.exec(destination);
 			if (destinationWords && (destinationWords.length == 4)) {
-				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [destinationWords[1], destinationWords[2], destinationWords[3]]).then(function(lat, lon) {
+				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [destinationWords[1], destinationWords[2], destinationWords[3]]).then(function(latLon) {
 					destination = latLon.lat + "," + latLon.lon;
 					return null;
                                 }));
@@ -177,68 +177,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 .controller('RouteCtrl', function ($scope, $location, $ionicSlideBoxDelegate, $q, routes, what3words, queryData, $timeout) {
 	$scope.$on('$ionicView.enter', function(e) {
 		var data = queryData.getQueryData();
-		if (data.origin && data.destination) {
-			function getRoutes(origin, destination, transportMode) {
-				routes.getWayPoints(origin, destination, transportMode).then(function (wayPoints) {
-					var deferreds = [];
-					for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
-						var wayPoint = wayPoints[wayPointIndex];
-						deferreds.push(what3words.getWords(WHAT3WORDS_API_KEY, wayPoint.lat, wayPoint.lon));
-					}
-		
-					$q.all(deferreds).then(function (wordLists) {
-						console.log(wayPoints);
-						console.log(wordLists);
-						$scope.data = {key: GOOGLE_API_KEY};
-						$scope.data.wayPoints = [];
-						for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
-							var wayPoint = wayPoints[wayPointIndex];
-							var words = wordLists[wayPointIndex];
-							$scope.data.wayPoints.push({
-								lat: wayPoint.lat,
-								lon: wayPoint.lon,
-								bearing: wayPoint.bearing,
-								directions: wayPoint.directions,
-								words: words
-							});
-						}
-						console.log($scope.data.wayPoints);
-						$ionicSlideBoxDelegate.update();
-					});
-				});
-			}
-			var origin = data.origin;
-			var destination = data.destination;
-			var deferreds = [];
-			var originWords = /^(\w+) (\w+) (\w+)$/.exec(origin);
-			if (originWords && (originWords.length == 4)) {
-				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [originWords[1], originWords[2], originWords[3]]).then(function(latLon) {
-					origin = latLon.lat + "," + latLon.lon;
-					return null;
-                                }));
-			}
-			var destinationWords = /^(\w+) (\w+) (\w+)$/.exec(destination);
-			if (destinationWords && (destinationWords.length == 4)) {
-				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [destinationWords[1], destinationWords[2], destinationWords[3]]).then(function(latLon) {
-					destination = latLon.lat + "," + latLon.lon;
-					return null;
-                                }));
-			}
-			if (deferreds.length > 0) {
-				$q.all(deferreds).finally(function() {
-					console.log("All done!");
-					getRoutes(origin, destination, data.transportMode);
-				});
-			} else {
-				getRoutes(origin, destination, data.transportMode);
-			}
-		} else {
-			$location.path('/tab/dash');
-		}
-
-
-
-		if (data.origin && data.destination) {
+		function doMap(origin, destination, transportMode) {
 			// Map
 
 			var map;
@@ -254,7 +193,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			  directionsService = new google.maps.DirectionsService();
 
 			  // Create a map and center it on Manhattan.
-			  var manhattan = new google.maps.LatLng(data.origin);
+			  var manhattan = new google.maps.LatLng(origin);
 			  var mapOptions = {
 			    zoom: 15,
 			    center: manhattan
@@ -273,7 +212,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 			}
 
 			function calcRoute() {
-				console.log('calc route', data.origin, data.destination);
+				console.log('calc route', origin, destination);
 			  // First, remove any existing markers from the map.
 			  for (var i = 0; i < markerArray.length; i++) {
 			    markerArray[i].setMap(null);
@@ -292,10 +231,10 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 				var travelMode = travelModes[travelMode] || google.maps.TravelMode.WALKING;
 
 
-			 console.log(data.transportMode);
+			 console.log(transportMode);
 			  var request = {
-			      origin: data.origin,
-			      destination: data.destination,
+			      origin: origin,
+			      destination: destination,
 			      travelMode: travelMode
 			  };
 
@@ -363,7 +302,70 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
     			map.setCenter(marker.getPosition());
 					map.setZoom(20);
 			}
+
 		}
+		if (data.origin && data.destination) {
+			function getRoutes(origin, destination, transportMode) {
+				console.log(origin, destination, transportMode);
+				routes.getWayPoints(origin, destination, transportMode).then(function (wayPoints) {
+					var deferreds = [];
+					for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
+						var wayPoint = wayPoints[wayPointIndex];
+						deferreds.push(what3words.getWords(WHAT3WORDS_API_KEY, wayPoint.lat, wayPoint.lon));
+					}
+		
+					$q.all(deferreds).then(function (wordLists) {
+						console.log(wayPoints);
+						console.log(wordLists);
+						$scope.data = {key: GOOGLE_API_KEY};
+						$scope.data.wayPoints = [];
+						for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
+							var wayPoint = wayPoints[wayPointIndex];
+							var words = wordLists[wayPointIndex];
+							$scope.data.wayPoints.push({
+								lat: wayPoint.lat,
+								lon: wayPoint.lon,
+								bearing: wayPoint.bearing,
+								directions: wayPoint.directions,
+								words: words
+							});
+						}
+						console.log($scope.data.wayPoints);
+						$ionicSlideBoxDelegate.update();
+					});
+				});
+				doMap(origin, destination, transportMode);
+			}
+			var origin = data.origin;
+			var destination = data.destination;
+			var deferreds = [];
+			var originWords = /^(\w+) (\w+) (\w+)$/.exec(origin);
+			if (originWords && (originWords.length == 4)) {
+				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [originWords[1], originWords[2], originWords[3]]).then(function(latLon) {
+					origin = latLon.lat + "," + latLon.lon;
+					return null;
+                                }));
+			}
+			var destinationWords = /^(\w+) (\w+) (\w+)$/.exec(destination);
+			if (destinationWords && (destinationWords.length == 4)) {
+				deferreds.push(what3words.getLocation(WHAT3WORDS_API_KEY, [destinationWords[1], destinationWords[2], destinationWords[3]]).then(function(latLon) {
+					destination = latLon.lat + "," + latLon.lon;
+					return null;
+                                }));
+			}
+			if (deferreds.length > 0) {
+				$q.all(deferreds).finally(function() {
+					console.log("All done!");
+					getRoutes(origin, destination, data.transportMode);
+				});
+			} else {
+				getRoutes(origin, destination, data.transportMode);
+			}
+		} else {
+			$location.path('/tab/dash');
+		}
+
+
 	});
 })
 
