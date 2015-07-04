@@ -79,7 +79,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 	}
 })
 
-.controller('RouteCtrl', function ($scope, $ionicSlideBoxDelegate, $q, routes, what3words, queryData) {
+.controller('RouteCtrl', function ($scope, $location, $ionicSlideBoxDelegate, $q, routes, what3words, queryData) {
 	$scope.$on('$ionicView.enter', function(e) {
 		var data = queryData.getQueryData();
 		if (data.origin && data.destination) {
@@ -93,7 +93,7 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 				$q.all(deferreds).then(function (wordLists) {
 					console.log(wayPoints);
 					console.log(wordLists);
-					$scope.data = {};
+					$scope.data = {key: GOOGLE_API_KEY};
 					$scope.data.wayPoints = [];
 					for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
 						var wayPoint = wayPoints[wayPointIndex];
@@ -109,6 +109,8 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
 					$ionicSlideBoxDelegate.update();
 				});
 			});
+		} else {
+			$location.path('/tab/dash');
 		}
 	});
 })
