@@ -52,10 +52,14 @@ angular.module('starter.services', [])
 .factory('routes', ['$rootScope', '$q',
 	function ($rootScope, $q) {
 		function getWayPoints(origin, destination, travelMode) {
+			var travelModes = {
+				walking: google.maps.TravelMode.WALKING,
+				cycle: google.maps.TravelMode.BICYCLING,
+			};
 			var request = {
 				origin: origin,
 				destination: destination,
-				travelMode: travelMode || google.maps.TravelMode.WALKING
+				travelMode: travelModes[travelMode] || google.maps.TravelMode.WALKING
 			};
 			var deferred = $q.defer();
 
@@ -74,10 +78,12 @@ angular.module('starter.services', [])
 							var dy = Math.sin(endLon - startLon) * Math.cos(endLat);
 							var dx = Math.cos(startLat) * Math.sin(endLat) - Math.sin(startLat) * Math.cos(endLat) * Math.cos(endLon - startLon);
 							var bearing = Math.atan2(dy, dx) * 180 / Math.PI;
+							var directions = step.instructions;
 							wayPoints.push({
 								lat: step.end_location.A,
 								lon: step.end_location.F,
-								bearing: bearing
+								bearing: bearing,
+								directions: directions
 							});
 						}
 					}
@@ -104,7 +110,8 @@ angular.module('starter.services', [])
 
 .factory('what3words', ['$rootScope', '$q', '$http',
 	function ($rootScope, $q, $http) {
-		var BASE_URL = 'https://api.what3words.com/position';
+		var BASE_W3W_URL = 'https://api.what3words.com/w3w';
+		var BASE_LOCATION_URL = 'https://api.what3words.com/position';
 
 		function getWords(key, lat, lon) {
 			var deferred = $q.defer();
@@ -116,7 +123,7 @@ angular.module('starter.services', [])
 				}
 			};
 
-			$http.get(BASE_URL, config)
+			$http.get(BASE_LOCATION_URL, config)
 				.success(function (data, status, headers, config) {
 					var obj = angular.fromJson(data);
 					return deferred.resolve(obj.words);
@@ -128,8 +135,35 @@ angular.module('starter.services', [])
 			return deferred.promise;
 		}
 
+		function getLocation(key, words) {
+			var deferred = $q.defer();
+
+			var config = {
+				params: {
+					key: key,
+					string: words[0] + "." + words[1] + "." + words[2]
+				}
+			};
+
+			$http.get(BASE_W3W_URL, config)
+				.success(function (data, status, headers, config) {
+					var obj = angular.fromJson(data);
+					if (obj.position) {
+						return deferred.resolve({lat: obj.position[0], lon: obj.position[1]});
+					} else {
+						return deferred.reject(status);
+					}
+				})
+				.error(function (data, status, headers, config) {
+					return deferred.reject(status);
+				});
+
+			return deferred.promise;
+		}
+
 		return {
-			getWords: getWords
+			getWords: getWords,
+			getLocation: getLocation
 		}
 	}
 ])

@@ -7749,3 +7749,21 @@ h1, h2, h3 {
     height: auto;
     position: absolute;
     right: 0; }
+
+#map-canvas {
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  bottom: 49px;
+  position: absolute; }
+
+#panel {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  margin-left: -180px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999; }
