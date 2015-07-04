@@ -2,6 +2,7 @@
   <ion-content>
     <ion-slide-box on-slide-changed="slideHasChanged($index)">
       <ion-slide ng-repeat="wayPoint in data.wayPoints">
+        <img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location={{wayPoint.lat}},{{wayPoint.lon}}" width="400" />
         <h1>{{wayPoint.lat}}, {{wayPoint.lon}}</h1>
         <span ng-repeat="word in wayPoint.words">{{word}}</span>
         <!-- <image-search ng-repeat="word in wayPoint.words" keyword="{{word}}"></image-search> -->

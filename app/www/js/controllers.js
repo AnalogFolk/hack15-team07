@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function ($scope) {})
+    .controller('DashCtrl', function ($scope, $state, routes) {})
 
 .controller('ChatsCtrl', function ($scope, Chats) {
 	// With the new view caching in Ionic, Controllers are only called
@@ -56,7 +56,7 @@ angular.module('starter.controllers', [])
         $scope.data.wayPoints.push({lat: wayPoint.lat,
                                     lon: wayPoint.lon,
                                     words: words});
-      };
+      }
       console.log($scope.data.wayPoints);
       $ionicSlideBoxDelegate.update();
     });
