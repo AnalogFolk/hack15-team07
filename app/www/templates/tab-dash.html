@@ -1,50 +1,32 @@
-<ion-view view-title="Dashboard">
-  <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">Search Location</div>
-      <div class="item item-body">
-
-
-
-
-
-
-<div class="list list-inset">
-  <label class="item item-input" for="start-location">
-          <input id="start-location" type="text" placeholder="Your start location"></input>
-  </label>
-  <label class="item item-input" for="target-location">
-
-          <input id="target-location" type="text" placeholder="Your target location"></input>
-  </label>
-</div>
-
-
-
-<div class="list">
-
-  <label class="item item-input item-select">
-    <div class="input-label">
-      Transport method
-    </div>
-    <select>
-                <option value="walking" selected>Walking</option>
-                <option value="cycle">Cycle</option>
-    </select>
-  </label>
-
-</div>
-
-          <button class="button button-full button-positive">Search</button>
-
-
+<ion-view view-title="Dumbo Route">
+    <ion-content class="padding">
+        <div class="list card">
+            <div class="item item-divider">Search Location</div>
+            <div class="item item-body">
+                <div class="list list-inset">
+                    <label class="item item-input" for="start-location">
+                        <input id="start-location" type="text" placeholder="Start location"></input>
+                    </label>
+                    <label class="item item-input" for="target-location">
+                        <input id="target-location" type="text" placeholder="Destination"></input>
+                    </label>
+                </div>
+                <div class="list">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Transport method
+                        </div>
+                        <select>
+                            <option value="walking" selected>Walking</option>
+                            <option value="cycle">Cycle</option>
+                        </select>
+                    </label>
+                </div>
+                <button class="button button-full button-positive">Search</button>
+            </div>
         </div>
-      </div>
-    </div>
-
-
-    Reverse image search: 
-    <image-search keyword="food"/>
-
-  </ion-content>
+        </div>
+        <!--Reverse image search:
+        <image-search keyword="food" />-->
+    </ion-content>
 </ion-view>

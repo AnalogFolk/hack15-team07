@@ -17,6 +17,56 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
-
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+$primary-color: #d12d23;
+$secondary-color: white;
+// Custom template styles
+@font-face {
+    font-family: 'aaarghnormal';
+    src: url("../fonts/Aaargh-webfont.eot");
+    src: url("../fonts/Aaargh-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Aaargh-webfont.woff") format("woff"), url("../fonts/Aaargh-webfont.ttf") format("truetype"), url("../fonts/Aaargh-webfont.svg#aaarghnormal") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body,
+.pane,
+.view {
+    background-color: $primary-color;
+    background-image: url("../img/elephant-large.png") no-repeat bottom right;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'aaarghnormal';
+}
+
+.bar.bar-stable {
+    background-color: $secondary-color;
+    .title {
+        color: $primary-color;
+        font-family: 'aaarghnormal';
+        font-weight: bold;
+    }
+}
+
+[nav-bar-transition="ios"] [nav-bar="active"] .bar,
+[nav-bar-transition="ios"] [nav-bar="entering"] .bar {
+    background: url("../img/elephant-header.png") no-repeat bottom right;
+    background-size: 25%;
+}
+
+.item-divider {
+    background-color: $secondary-color;
+    color: $primary-color;
+}
+
+.button.button-positive {
+    background-color: #a9170e;
+    border: 0;
+    &.activated {
+        background-color: #c73528;
+    }
+}
