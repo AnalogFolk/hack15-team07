@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function ($scope) {})
+.controller('DashCtrl', function ($scope, $state, routes) {})
 
 .controller('ChatsCtrl', function ($scope, Chats) {
 	// With the new view caching in Ionic, Controllers are only called
@@ -21,12 +21,6 @@ angular.module('starter.controllers', [])
 	$scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function ($scope) {
-	$scope.settings = {
-		enableFriends: true
-	};
-})
-
 .directive('imageSearch', function (imageSeachFactory) {
 	return {
 		scope: {
@@ -41,4 +35,48 @@ angular.module('starter.controllers', [])
 		},
 		template: '<div></div>'
 	}
+})
+
+.controller('RouteCtrl', function ($scope, $ionicSlideBoxDelegate, $q, routes, what3words) {
+	routes.getWayPoints('37.7738571,-122.4102823', '37.7891231,-122.4173545').then(function (wayPoints) {
+		var deferreds = [];
+		for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
+			var wayPoint = wayPoints[wayPointIndex];
+			deferreds.push(what3words.getWords(WHAT3WORDS_API_KEY, wayPoint.lat, wayPoint.lon));
+		}
+
+		$q.all(deferreds).then(function (wordLists) {
+			console.log(wayPoints);
+			console.log(wordLists);
+			$scope.data = {};
+			$scope.data.wayPoints = [];
+			for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
+				var wayPoint = wayPoints[wayPointIndex];
+				var words = wordLists[wayPointIndex];
+				$scope.data.wayPoints.push({
+					lat: wayPoint.lat,
+					lon: wayPoint.lon,
+					bearing: wayPoint.bearing,
+					words: words
+				});
+			}
+			console.log($scope.data.wayPoints);
+			$ionicSlideBoxDelegate.update();
+		});
+	});
+})
+
+.controller('AccountCtrl', function ($scope) {
+	$scope.settings = {
+		enableFriends: true
+	};
+})
+
+
+.controller('WelcomeController', function ($scope, $state) {
+
+	$scope.hide = function () {
+		$scope.hideIntro = true;
+	}
+
 });

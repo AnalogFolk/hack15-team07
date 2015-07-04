@@ -17,10 +17,13 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
 $primary-color: #d12d23;
 $secondary-color: white;
+
 // Custom template styles
 @font-face {
     font-family: 'aaarghnormal';
@@ -29,6 +32,7 @@ $secondary-color: white;
     font-weight: normal;
     font-style: normal;
 }
+
 
 body,
 .pane,
@@ -68,5 +72,33 @@ h3 {
     border: 0;
     &.activated {
         background-color: #c73528;
+    }
+}
+
+// Welcome screen
+.welcome-screen {
+    &.ng-hide-animate {
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    transition: opacity 0.2s;
+    background-color: $primary-color;
+    .title {
+        background: url("../img/logo-repeater.png") repeat-x;
+        width: 100%;
+        top: 20%;
+        position: relative;
+        height: 20%;
+        .logo {}
+    }
+    .elephant-image {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        right: 0;
     }
 }

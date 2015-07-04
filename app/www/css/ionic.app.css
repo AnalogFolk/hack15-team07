@@ -7727,3 +7727,25 @@ h1, h2, h3 {
   border: 0; }
   .button.button-positive.activated {
     background-color: #c73528; }
+
+.welcome-screen {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+  transition: opacity 0.2s;
+  background-color: #d12d23; }
+  .welcome-screen.ng-hide-animate {
+    opacity: 0;
+    transition: opacity 0.2s; }
+  .welcome-screen .title {
+    background: url("../img/logo-repeater.png") repeat-x;
+    width: 100%;
+    top: 20%;
+    position: relative;
+    height: 20%; }
+  .welcome-screen .elephant-image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    right: 0; }

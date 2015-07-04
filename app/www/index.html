@@ -11,16 +11,34 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-    <!-- Google Maps API -->
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <!-- your app's js -->
     <script src="js/apikeys.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+    <!-- Google Maps API -->
+    <script type="text/javascript">
+    document.write('<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=' +
+        GOOGLE_API_KEY +
+        '&sensor=false"><' + '/script>');
+    </script>
 </head>
 
 <body ng-app="starter">
+
+<!-- Comment out this welcome screen while in dev :) -->
+<!--
+    <div class="welcome-screen" ng-controller="WelcomeController" ng-hide="hideIntro">
+        <div class="title" ng-click="hide()">
+            <img src="../img/logo-large.png" class="logo" />
+            <div>
+                <img src="../img/elephant-large.png" class="elephant-image" />
+            </div>
+        </div>
+    </div>
+  -->
+
+
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
