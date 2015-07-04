@@ -68,98 +68,77 @@ getPostcode.get(data.coords.latitude, data.coords.longitude).success(function(da
   
 })
 
-.directive('hyperlapse', function($timeout, queryData) {
+.directive('hyperlapse', function($timeout, $location, queryData) {
 
-    return {
-      scope: {
-          lat: '@',
-          long: '@'
-      },
-      template: '<div id="hyperlapse"></div>',
-      link: function(scope, element) {
+  return {
+    scope: {
+      lat: '@',
+      long: '@'
+    },
+    template: '<div id="hyperlapse"></div>',
+    link: function(scope, element) {
+      $timeout(function() {
+        var data = queryData.getQueryData();
+        if (data.origin && data.destination) {
 
-$timeout(function() {
-
-var data = queryData.getQueryData();
-    if (data.origin && data.destination) {
-
-
-
-      
-      routes.getWayPoints(data.origin, data.destination).then(function (wayPoints) {
-        var deferreds = [];
-        for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
-          var wayPoint = wayPoints[wayPointIndex];
-          
-var lat = wayPoint.lat;
-        }
-
-
-
-var el = element[0];
-
-var hyperlapse = new Hyperlapse(el, {
-    lookat: new google.maps.LatLng(37.81409525128964,-122.4775045005249),
-    zoom: 1,
-    use_lookat: true,
-    elevation: 50
-});
-
-hyperlapse.onError = function(e) {
-    console.log(e);
-};
-
-hyperlapse.onRouteComplete = function(e) {
-    hyperlapse.load();
-};
-
-hyperlapse.onLoadComplete = function(e) {
-    hyperlapse.play();
-};
-
-// Google Maps API stuff here...
-var directions_service = new google.maps.DirectionsService();
-
-var route = {
-    request:{
-        origin: new google.maps.LatLng(37.816480000000006,-122.47825,37),
-        destination: new google.maps.LatLng(37.81195,-122.47773000000001),
-        travelMode: google.maps.DirectionsTravelMode.DRIVING
-    }
-};
-
-directions_service.route(route.request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-        hyperlapse.generate( {route:response} );
-    } else {
-        console.log(status);
-    }
-});
-
-
-
-
-
-
-
-
-
-
-  
-      });
-    }
+/*
+          routes.getWayPoints(data.origin, data.destination).then(function (wayPoints) {
+            for (var wayPointIndex = 0; wayPointIndex < wayPoints.length; wayPointIndex++) {
+              var wayPoint = wayPoints[wayPointIndex];
+              var lat = wayPoint.lat;
+            }
+*/
+        
+            var el = element[0];
     
-
-
-
-}, 10);
-      }
-
-
-
-    };
-
-
+            var hyperlapse = new Hyperlapse(el, {
+                zoom: 1,
+                elevation: 50
+            });
+            
+            hyperlapse.onError = function(e) {
+                console.log(e);
+            };
+            
+            hyperlapse.onRouteComplete = function(e) {
+                hyperlapse.load();
+            };
+            
+            hyperlapse.onLoadComplete = function(e) {
+                hyperlapse.play();
+            };
+            
+            // Google Maps API stuff here...
+            var directions_service = new google.maps.DirectionsService();
+            
+            var travelModes = {
+              walking: google.maps.TravelMode.WALKING,
+              cycle: google.maps.TravelMode.BICYCLING,
+            };
+            var route = {
+              request:{
+                origin: data.origin,
+                destination: data.destination,
+                travelMode: travelModes[data.transportMode] || google.maps.TravelMode.WALKING
+              }
+            };
+            
+            directions_service.route(route.request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    hyperlapse.generate( {route:response} );
+                } else {
+                    console.log(status);
+                }
+            });
+/*
+          });
+*/
+        } else {
+          $location.path('/tab/dash');
+        }
+      }, 10);
+    }
+  };
 })
 
 .directive('imageSearch', function (imageSeachFactory) {
