@@ -57,7 +57,7 @@ angular.module('starter.controllers', [])
 	}
 })
 
-.controller('RouteCtrl', function ($scope, $ionicSlideBoxDelegate, $q, routes, what3words, queryData) {
+.controller('RouteCtrl', function ($scope, $location, $ionicSlideBoxDelegate, $q, routes, what3words, queryData) {
 	$scope.$on('$ionicView.enter', function(e) {
 		var data = queryData.getQueryData();
 		if (data.origin && data.destination) {
@@ -87,6 +87,8 @@ angular.module('starter.controllers', [])
 					$ionicSlideBoxDelegate.update();
 				});
 			});
+		} else {
+			$location.path('/tab/dash');
 		}
 	});
 })
